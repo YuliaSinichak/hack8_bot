@@ -34,6 +34,7 @@ CONNECTION_STRING = (
 bot = TeleBot(API_TOKEN, parse_mode="HTML")
 data = Data(conn_string=CONNECTION_STRING, bot=bot)
 
+
 main_menu_section = MainMenuSection(data=data)
 team_section = TeamMenu(data=data)
 admin_section = AdminSection(data=data)
@@ -50,7 +51,7 @@ def start_bot(message):
 
     except Exception as e:
         print(f"Exception during start - {e}")
-        bot.send_message(message.chat.id, text="Упс, щось пішло не так. Спробуй знову!")
+        bot.send_message(message.chat.id, text="Упс, щось пішло не так. Спробуй знов!")
 
 
 @bot.message_handler(content_types=["text"])
