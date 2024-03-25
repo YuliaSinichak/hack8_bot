@@ -128,9 +128,9 @@ class TeamMenu(Section):
             )
             return
 
-        if self.data.hackathon.current_menu != self.data.hackathon.p_registration_menu:
-            self.bot.send_message(user.chat_id, f"Реєстрація вже закінчилась.")
-            return
+        # if self.data.hackathon.current_menu != self.data.hackathon.p_registration_menu:
+        #     self.bot.send_message(user.chat_id, f"Реєстрація вже закінчилась.")
+        #     return
 
         quiz.start_quiz(
             user=user,
