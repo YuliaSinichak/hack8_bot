@@ -80,7 +80,7 @@ def handle_text_buttons(message):
         elif message_text == "SilentUpdate":
             updater.update_menu_from_db()
 
-        elif message_text == "__a":
+        elif message_text == "NakedZ0han":
             admin_section.send_admin_menu(user)
 
         # TEMP!!!
