@@ -60,10 +60,7 @@ class Data:
     def _create_quizes(self):
         if self.start_quiz is None:
             self._create_start_quiz()
-
-        if self.register_team_quiz is None:
-            self._create_register_team_quiz()
-
+            
         if self.login_team_quiz is None:
             self._create_login_team_quiz()
 
