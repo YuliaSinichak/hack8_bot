@@ -231,17 +231,36 @@ class AdminSection(Section):
 
         if is_approved:
             team.test_task_passed = True
-            admin_text = f"Команда {team.name} бере участь в хакатоні!"
+            admin_text = f"Вітаємо, {team.name}!
+            Дякуємо за подачу на BEST::HACKath0n 2024!
+            Раді повідомити, що ваша команда пройшла відбір на змагання. Це чудова новина і важливий крок до можливості посісти призове місце на нашому заході!
+            Для підтвердження реєстрації, просимо пройти усіх учасників команди організаційну форму. Щоб бути в курсі всіх новин щодо змагань, додавайся в чат за посиланням! 
+            Не зупиняйтесь на досягнутому та продовжуйте у тому ж дусі, адже у вас є всі шанси стати переможцем BEST::HACKath0n 2024!! 
+            З повагою, організатори BEST::HACKathon 2024"
         else:
             team.test_task_passed = False
-            admin_text = f"Команда {team.name} не братиме участь в хакатоні!"
-
+            admin_text = f"Привіт, {team.name}!
+            Дякуємо вам за вашу подачу на BEST::HACKath0n 2024
+            На жаль, ваша команда не пройшла відбір на змагання. Не засмучуйтесь, це лише один з кроків на вашому шляху.
+            Не зупиняйтесь на досягнутому та не втрачайте надії, адже у вас є всі шанси спробувати себе на наступному BEST::HACKath0n! Ми впевнені, що ви зможете потрапити на наші змагання! 
+            Ми віримо у ваш потенціал і чекаємо вашої участі у майбутніх хакатонах.
+            З повагою, BEST::HACKathon 2024"
         team.save()
 
-        receivers_count = 0
         for member in team.members:
-            self.bot.send_message(member.chat_id, text=admin_text)
+            if team.test_task_passed:
+                buttons = [[InlineKeyboardButton("Посилання на форму!", url="https://docs.google.com/forms/d/e/1FAIpQLSfcys4QQehq2BGDJ3_o66I0Jekj7sr6kNTt2iqYrnTUTsNVrA/viewform")],
+                           [InlineKeyboardButton("Чат з учасниками.", url="https://t.me/+ESRJc4Sd5fk1NGMy")]]
+                reply_markup = InlineKeyboardMarkup(buttons)
+            else:
+                reply_markup = None
+            self.bot.send_message(
+                member.chat_id, 
+                text=admin_text,
+                reply_markup=reply_markup,
+            )
             receivers_count += 1
+
 
         self.bot.send_message(
             user.chat_id,
