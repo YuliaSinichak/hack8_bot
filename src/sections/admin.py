@@ -229,6 +229,8 @@ class AdminSection(Section):
         admin_text = str()
         team_text = str()
 
+        receivers_count = 0
+        
         if is_approved:
             team.test_task_passed = True
             admin_text = f"Вітаємо, {team.name}! 🥸\n\n\nДякуємо за подачу на BEST::HACKath0n 2024!\n\nРаді повідомити, що ваша команда пройшла відбір на змагання. Це чудова новина і важливий крок до можливості посісти призове місце на нашому заході! 🥳\n\nДля підтвердження реєстрації, просимо пройти усіх учасників команди організаційну форму. Щоб бути в курсі всіх новин щодо змагань, додавайся в чат за посиланням нижче! 👇🏻\n\nНе зупиняйтесь на досягнутому та продовжуйте у тому ж дусі, адже у вас є всі шанси стати переможцем BEST::HACKath0n 2024!! 😊\n\n\nЗ повагою, організатори BEST::HACKathon 2024! 💚"
@@ -238,6 +240,8 @@ class AdminSection(Section):
         team.save()
 
         for member in team.members:
+            self.bot.send_message(member.chat_id, text=admin_text)
+
             if team.test_task_passed:
                 buttons = [[InlineKeyboardButton("Посилання на форму!", url="https://docs.google.com/forms/d/e/1FAIpQLSfcys4QQehq2BGDJ3_o66I0Jekj7sr6kNTt2iqYrnTUTsNVrA/viewform")],
                            [InlineKeyboardButton("Чат з учасниками.", url="https://t.me/+ESRJc4Sd5fk1NGMy")]]
@@ -249,6 +253,7 @@ class AdminSection(Section):
                 text=admin_text,
                 reply_markup=reply_markup,
             )
+
             receivers_count += 1
 
 
