@@ -89,19 +89,19 @@ class HackathonMenu(me.Document):
         return HackathonMenu.objects.filter(name=self.name).first()
 
     def send_menu(self, bot: TeleBot, user: User) -> Message:
+        if user.is_participant:
+            if self.menu_photo is None:
+                return bot.send_message(
+                    user.chat_id, self.menu_text, reply_markup=self.markup
+                )
 
-        if self.menu_photo is None:
-            return bot.send_message(
-                user.chat_id, self.menu_text, reply_markup=self.markup
-            )
-
-        else:
-            return bot.send_photo(
-                user.chat_id,
-                photo=self.menu_photo,
-                caption=self.menu_text,
-                reply_markup=self.markup,
-            )
+            else:
+                return bot.send_photo(
+                    user.chat_id,
+                    photo=self.menu_photo,
+                    caption=self.menu_text,
+                    reply_markup=self.markup,
+                )
 
     def _reply_keyboard_columns_generator(self):
         row = []
