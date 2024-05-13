@@ -93,6 +93,10 @@ class AdminSection(Section):
             team_id = call.data.split(";")[2]
             self.delete_team(user, team_id, call=call)
 
+        elif action == "CV download":
+            team_id = call.data.split(";")[2]
+            self.download_cv(user, team_id, call=call)
+
         elif action == "StartHack":
             self.start_hack(user, call=call)
 
@@ -141,7 +145,8 @@ class AdminSection(Section):
         self._send_menu(user, text, photo=None, markup=markup, call=call)
 
     def download_cv(self, user: User, call: CallbackQuery = None):
-        users_with_cv = list(User.objects.filter(resume__ne=None ))
+
+        users_with_cv = list(User.objects.filter(resume__ne=None))
 
         file_downloader = FileDownloader(self.bot, users_with_cv, user)
 
@@ -566,6 +571,14 @@ class AdminSection(Section):
             ),
         )
         markup.add(delete_team_btn)
+
+        CV_btn = InlineKeyboardButton(
+            text="CV download", 
+            callback_data=self.form_admin_callback(
+                action="CV download", team_id=team.id, edit=True
+            ),
+        )
+        markup.add(CV_btn)
 
         back_btn = self.create_back_button(
             callback_data=self.form_admin_callback(
