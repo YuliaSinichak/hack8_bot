@@ -93,10 +93,6 @@ class AdminSection(Section):
             team_id = call.data.split(";")[2]
             self.delete_team(user, team_id, call=call)
 
-        elif action == "CV download":
-            team_id = call.data.split(";")[2]
-            self.download_cv(user, team_id, call=call)
-
         elif action == "StartHack":
             self.start_hack(user, call=call)
 
