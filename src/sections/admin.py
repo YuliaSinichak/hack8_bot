@@ -568,13 +568,6 @@ class AdminSection(Section):
         )
         markup.add(delete_team_btn)
 
-        CV_btn = InlineKeyboardButton(
-            text="CV download", 
-            callback_data=self.form_admin_callback(
-                action="CV download", team_id=team.id
-            ),
-        )
-        markup.add(CV_btn)
 
         back_btn = self.create_back_button(
             callback_data=self.form_admin_callback(
