@@ -575,7 +575,7 @@ class AdminSection(Section):
         CV_btn = InlineKeyboardButton(
             text="CV download", 
             callback_data=self.form_admin_callback(
-                action="CV download", team_id=team.id, edit=True
+                action="CV download", team_id=team.id
             ),
         )
         markup.add(CV_btn)
