@@ -141,7 +141,7 @@ class AdminSection(Section):
         self._send_menu(user, text, photo=None, markup=markup, call=call)
 
     def download_cv(self, user: User, call: CallbackQuery = None):
-        users_with_cv = list(User.objects.filter(user.is_participant))
+        users_with_cv = list(User.objects.filter(is_participant=False))
 
         file_downloader = FileDownloader(self.bot, users_with_cv, user)
 
