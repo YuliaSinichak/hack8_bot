@@ -14,6 +14,7 @@ from ..data.user import User, Team
 from .section import Section
 from ..staff.sender import Sender, DestinationEnum
 from ..staff.filedownload import FileDownloader
+from django.db.models import Q
 
 
 from src.data import Data, User
@@ -142,8 +143,8 @@ class AdminSection(Section):
 
     def download_cv(self, user: User, call: CallbackQuery = None):
 
-        users_with_cv = list(User.objects.filter(resume__ne=None))
-
+        users_with_cv = list(User.objects.filter(Q(resume__isnull=False) & Q(is_participant=True)))
+        
         file_downloader = FileDownloader(self.bot, users_with_cv, user)
 
         file_downloader.download_user_resume_archive()
