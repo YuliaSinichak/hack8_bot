@@ -93,6 +93,10 @@ class AdminSection(Section):
             team_id = call.data.split(";")[2]
             self.delete_team(user, team_id, call=call)
 
+        elif action == "CVDownload":
+            team_id = call.data.split(";")[2]
+            self.download_team_cv(user, team_id, call=call)
+
         elif action == "StartHack":
             self.start_hack(user, call=call)
 
@@ -146,6 +150,11 @@ class AdminSection(Section):
 
         file_downloader = FileDownloader(self.bot, users_with_cv, user)
 
+        file_downloader.download_user_resume_archive()
+
+    def download_team_cv(self, user: User, team_id: str, call: CallbackQuery = None):
+        users_with_cv = list(User.objects.filter(resume__isnull=False, team_id_field=team_id, is_participant=True))
+        file_downloader = FileDownloader(self.bot, users_with_cv, user)
         file_downloader.download_user_resume_archive()
 
     def delete_team(
@@ -560,6 +569,14 @@ class AdminSection(Section):
 
         markup.add(approve_btn, reject_btn)
         markup.add(approve_AVAL_btn, reject_UNAVAL_btn)
+
+        cv_btn = InlineKeyboardButton(
+            text="CV",
+            callback_data=self.form_admin_callback(
+                action="CVDownload", team_id=team.id
+            ),
+        )
+        markup.add(cv_btn)
         delete_team_btn = InlineKeyboardButton(
             text="Видалити команду",
             callback_data=self.form_admin_callback(
