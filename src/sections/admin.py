@@ -142,7 +142,7 @@ class AdminSection(Section):
 
     def download_cv(self, user: User, call: CallbackQuery = None):
 
-        users_with_cv = list(User.objects.filter(resume__me=None))
+        users_with_cv = list(User.objects.filter(resume__ne=None))
 
         file_downloader = FileDownloader(self.bot, users_with_cv, user)
 
