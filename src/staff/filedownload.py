@@ -85,7 +85,7 @@ class FileDownloader:
         downloaded_file = resume.download_file(self.bot)
 
         # save file to temp directory
-        file_name = f"{user.team.name}__{user.username}__{resume.file_name}"
+        file_name = f"{user.username}__{resume.file_name}"
         temp_file_path = os.path.join(dir_path, file_name)
 
         try:
